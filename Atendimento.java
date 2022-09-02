@@ -1,11 +1,15 @@
 package programa;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Atendimento {
 	
 	private boolean status = false;
+	double soma;
 	private String ini;
 	private String fim;
-	private double valorTotal = 0;
+	static List<Servico> servicosAtendimento = new ArrayList<Servico>();
 	Cliente cliente;
 	Modelo modelo;
 	
@@ -58,13 +62,24 @@ public class Atendimento {
 	public void setModelo(Modelo modelo) {
 		this.modelo = modelo;
 	}
-
-	public double getValorTotal() {
-		return valorTotal;
+	
+	public void adicionarServico(Servico servico) {
+		servicosAtendimento.add(servico);
 	}
-
-	public void setValorTotal(double valorTotal) {
-		this.valorTotal += valorTotal;
+	
+	public void listarServicos() {
+		for(Servico servico: servicosAtendimento) {
+			System.out.println("Definição do serviço: " + servico.getNome());
+			System.out.println("Valor: " + servico.getValor());
+		}
+	}
+	
+	public double obterValorTotal() {
+		soma = 0;
+		for(Servico servico: servicosAtendimento) {
+			soma += servico.getValor();
+		}
+		return soma;
 	}
 
 	public String toString() {
@@ -72,15 +87,13 @@ public class Atendimento {
 			return	"\nCliente: " + cliente.getNome() +
 					"\nModelo: " + modelo.getNome() +
 					"\nData de abertura do atendimento: " + ini +
-					"\nStatus do Atendimento: Aberto" + 
-					"\nValor Total do Atendimento: " + valorTotal;
+					"\nStatus do Atendimento: Aberto";
 		}else {
 			return "\nCliente: " + cliente.getNome() +
 				"\nModelo: " + modelo.getNome() +
 				"\nData de abertura do atendimento: " + ini +
 				"\nData de fechamento do atendimento: " + fim +
-				"\nStatus do Atendimento: Fechado" +
-				"\nValor Total do Atendimento: " + valorTotal; 
+				"\nStatus do Atendimento: Fechado"; 
 		}
 	}
 	

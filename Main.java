@@ -3,25 +3,30 @@ package programa;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 	static Scanner teclado = new Scanner(System.in);
-	static ArrayList<Atendimento> atendimentos = new ArrayList<Atendimento>();
-	static ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-	static ArrayList<Marca> marcas = new ArrayList<Marca>();
-	static ArrayList<Modelo> modelos = new ArrayList<Modelo>();
-	static ArrayList<Servico> servicos = new ArrayList<Servico>();
+	static List<Atendimento> atendimentos = new ArrayList<Atendimento>();
+	static List<Cliente> clientes = new ArrayList<Cliente>();
+	static List<Marca> marcas = new ArrayList<Marca>();
+	static List<Modelo> modelos = new ArrayList<Modelo>();
+	static List<Servico> servicos = new ArrayList<Servico>();
 	
-	//variavel de controle dos laços
-	static int b1;
-	static int b2;
-	static int cont;
+	static int b1;//controle de laço dentro dos métodos
+	static int b2;//controle de laço dentro dos métodos
+	static int b3;//controle de laço no switch do main
+	static int cont;//contador para listar
+	static int valorInt;//receber respostas do tipo int
+	static String valorString;//receber resposta do tipo String
+	static double valorDouble;
+	
 	static boolean achou;
 	
 	public static void main(String[] args) {	
 		do {
-			b2 = 0;
+			b3 = 0;
 			System.out.println("--------------------");
 			System.out.println("-----Lava Jato Sr. José----");
 			System.out.println("Selecione a opção que deseja:");
@@ -36,9 +41,9 @@ public class Main {
 			System.out.println("--     Opção 8 - Gerar cadastros para teste   --");
 			System.out.println("--     Opção 0 - Encerrar sistema   --");
 			System.out.println("--------------------");
-			b2 = teclado.nextInt();
-			if(b2 != 0) {
-				switch(b2) {
+			b3 = teclado.nextInt();
+			if(b3 != 0) {
+				switch(b3) {
 				case 1:
 					cadastrarMarcas();
 					break;
@@ -55,8 +60,7 @@ public class Main {
 					
 					break;
 				case 5:
-					abrirNovoAtendimento();
-					
+					abrirNovoAtendimento();		
 					break;
 				case 6:
 					editarOuEncerrarAtendimento();
@@ -74,7 +78,7 @@ public class Main {
 					break;		
 			  }
 			}			
-		}while(b2 != 0);
+		}while(b3 != 0);
 		teclado.close();
 	}
 	public static void cadastrarMarcas() {
@@ -83,9 +87,9 @@ public class Main {
 			teclado.nextLine();
 			System.out.println("-------Cadastro de Marca-------");
 			System.out.println("Digite o nome da Marca: ");	
-			String a1 = teclado.nextLine();
+			valorString = teclado.nextLine();
 			
-			Marca m = new Marca(a1);
+			Marca m = new Marca(valorString);
 			marcas.add(m);
 			System.out.println("Digite (0) para sair: ");
 			System.out.println("Digite (1) para cadastrar uma nova marca: ");
@@ -99,7 +103,7 @@ public class Main {
 			b1 = 0;
 			teclado.nextLine();
 			System.out.println("Digite o modelo: ");
-			String nome = teclado.nextLine();
+			valorString = teclado.nextLine();
 			
 			
 			System.out.println("-------Associar Marca-------");
@@ -111,12 +115,12 @@ public class Main {
 			}
 			
 			System.out.println("Digite o código correspondente a marca do veículo: ");
-			int num = teclado.nextInt();
+			valorInt = teclado.nextInt();
 			
 			cont = 1;
 			for(Marca marca: marcas) {
-				if(cont == num){
-					Modelo m = new Modelo(nome, marca);
+				if(cont == valorInt){
+					Modelo m = new Modelo(valorString, marca);
 					modelos.add(m);
 				}
 				cont += 1;
@@ -131,19 +135,21 @@ public class Main {
 	public static void cadastrarServico() {
 		do{
 			b1 = 0;
-		
-			System.out.println("------- Digite o nome do servico -------");
-			System.out.println("Digite o nome do servico: ");
 			teclado.nextLine();
-			String nome = teclado.nextLine();
-			
+			System.out.println("------- Digite o nome do servico -------");
+			System.out.println("Digite o nome do servico: ");		
+			Servico s = new Servico();
+			valorString = teclado.nextLine();
+			s.setNome(valorString);
+						
 			System.out.println("Digite a descrição do servico: ");
-			String descricao = teclado.nextLine();
+			valorString = teclado.nextLine();
+			s.setDescricao(valorString);
 			
 			System.out.println("Digite o valor o serviço: ");
-			double valor = teclado.nextDouble();
-			
-			Servico s = new Servico(nome,descricao,valor);
+			valorDouble = teclado.nextDouble();
+			s.setValor(valorDouble);
+
 			servicos.add(s);
 			
 			System.out.println("Digite (0) para sair: ");
@@ -157,19 +163,32 @@ public class Main {
 			b1 = 0;//controlar laço
 			System.out.println("------- Cadastro de Cliente -------");
 			teclado.nextLine();
+			Cliente c = new Cliente();
+			
 			System.out.println("\nDigite o nome do cliente: ");
-			String nome = teclado.nextLine();
+			valorString = teclado.nextLine();
+			c.setNome(valorString);
+			
 			System.out.println("Digite seu telefone: ");
-			String telefone = teclado.nextLine();
+			valorString = teclado.nextLine();
+			c.setTelefone(valorString);
+			
 			System.out.println("Digite seu cpf: ");
-			String cpf = teclado.nextLine();
+			valorString = teclado.nextLine();
+			c.setCpf(valorString);
+			
 			System.out.println("Digite seu cep: ");
-			String cep = teclado.nextLine();
+			valorString = teclado.nextLine();
+			c.setCep(valorString);
+			
 			System.out.println("Digite sua cidade: ");
-			String cidade = teclado.nextLine();
+			valorString = teclado.nextLine();
+			c.setCidade(valorString);
+			
 			System.out.println("Digite seu email ");
-			String email = teclado.nextLine();
-			Cliente c = new Cliente(nome,telefone,cpf,cep,cidade,email);		
+			valorString = teclado.nextLine();
+			c.setEmail(valorString);
+	
 			clientes.add(c);
 			
 			System.out.println("Digite (0) para sair: ");
@@ -184,11 +203,11 @@ public class Main {
 			
 		teclado.nextLine();
 		System.out.println("Digite o cpf do cliente:");
-		String nome = teclado.nextLine();
+		valorString = teclado.nextLine();
 		achou = false;
 			
 		for(Cliente cliente: clientes) {
-			if(cliente.getCpf().equalsIgnoreCase(nome)){
+			if(cliente.getCpf().equalsIgnoreCase(valorString)){
 				System.out.println("Cliente: " + cliente.getNome());
 				
 				
@@ -204,18 +223,16 @@ public class Main {
 				b2 = 0;
 					
 				listarServicos();
-					
 				System.out.println("Digite o código do serviço que deseja adicionar: ");
-				int cd = teclado.nextInt();
+				valorInt = teclado.nextInt();
 					
 				cont = 0;
 				for(Servico servico: servicos) {
-					if(cont == cd) {
-						a.setValorTotal(servico.getValor());
+					if(cont == valorInt) {
+						a.adicionarServico(servico);
 					}
 					cont += 1;
-				}			
-							
+				}						
 				System.out.println("Digite (0) para sair: ");
 				System.out.println("Digite (1) para adicionar um novo serviço ao atendimento: ");
 				b2 = teclado.nextInt();
@@ -229,18 +246,17 @@ public class Main {
 				+ "\nMarca: " + modelo.marca.getNome());
 				cont += 1;
 			}
-					
+			
 			System.out.println("Digite o código do modelo que deseja adicionar: ");
-			int cd = teclado.nextInt();
-					
+			valorInt = teclado.nextInt();	
+			
 			cont = 0;
 			for(Modelo modelo: modelos) {
-				if(cont == cd) {
+				if(cont == valorInt) {
 					a.setModelo(modelo);
 				}
 				cont += 1;
-			}			
-				
+			}				
 			atendimentos.add(a);
 		} else {
 			System.out.println("Cliente não encontrado");
@@ -250,10 +266,12 @@ public class Main {
 		System.out.println("------- Editando ou Encerrando um atendimento -------");
 		teclado.nextLine();
 		System.out.println("Digite o cpf do cliente:");
-		String nome = teclado.nextLine();
+		valorString = teclado.nextLine();
 		achou = false;
+		
 		for(Atendimento atendimento: atendimentos) {
-			if(atendimento.cliente.getCpf().equalsIgnoreCase(nome) && atendimento.getStatus()){
+			if(atendimento.cliente.getCpf().equalsIgnoreCase(valorString) && 
+					atendimento.getStatus()){
 				achou = true;
 				System.out.println("Cliente: " + atendimento.cliente.getNome());
 				System.out.println("--     Opção 1 - Deseja adicionar mais um serviço    --");
@@ -267,12 +285,12 @@ public class Main {
 						listarServicos();
 							
 						System.out.println("Digite o código do serviço que deseja adicionar: ");
-						int cd = teclado.nextInt();
+						valorInt = teclado.nextInt();
 							
 						cont = 0;
 						for(Servico servico: servicos) {
-							if(cont == cd) {
-								atendimento.setValorTotal(servico.getValor());
+							if(cont == valorInt) {
+								atendimento.adicionarServico(servico);
 								System.out.println("Serviço Adicionado");
 							}
 							cont += 1;
@@ -302,14 +320,24 @@ public class Main {
 		
 		System.out.println("Deseja visualizar o atendimento com status aberto ou encerrado?");
 		System.out.println("Digite (1) para aberto e (2) para fechado");
-		b2 = teclado.nextInt();
+		valorInt = teclado.nextInt();
 		for(Atendimento atendimento: atendimentos) {
-			if(b2 == 1) {
-				if(atendimento.getStatus() == true)
+			if(valorInt == 1) {
+				if(atendimento.getStatus() == true) {
 					System.out.println(atendimento);
+					System.out.println("Lista de Serviços:\n");
+					atendimento.listarServicos();
+					System.out.println("\nValor total dos serviços: " +
+							atendimento.obterValorTotal() + "\n");
+				}
 			} else {
-				if(atendimento.getStatus() == false)
+				if(atendimento.getStatus() == false) {
 					System.out.println(atendimento);
+					System.out.println("Lista de Serviços:\n");
+					atendimento.listarServicos();
+					System.out.println("\nValor total dos serviços: " +
+					atendimento.obterValorTotal() + "\n");
+				}
 			}
 		}
 	}
@@ -325,12 +353,12 @@ public class Main {
 		marcas.add(m2);
 		
 		Modelo mod1 = new Modelo("palio fire", m1);
-		Modelo mod2 = new Modelo("bmw", m1);
+		Modelo mod2 = new Modelo("bmw", m2);
 		modelos.add(mod1);
 		modelos.add(mod2);
 		
-		Cliente c1 = new Cliente("Francisco Generico","88 94870757","00000000000","062130110","sobral","generico@gmail.com");		
-		Cliente c2 = new Cliente("Raimundo Comum","88 948569798","11111111111","062130110","cariri","comum@gmail.com");
+		Cliente c1 = new Cliente("Francisco Generico","88 94870757","0","062130110","sobral","generico@gmail.com");		
+		Cliente c2 = new Cliente("Raimundo Comum","88 948569798","1","062130110","cariri","comum@gmail.com");
 		clientes.add(c1);
 		clientes.add(c2);
 		System.out.println("------- Cadastros Gerados -------");
